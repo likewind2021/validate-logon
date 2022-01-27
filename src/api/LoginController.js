@@ -5,8 +5,8 @@ class LoginController {
   // eslint-disable-next-line no-useless-constructor
   constructor () {}
   async forget (ctx) {
-    console.log(ctx.request)
     const { body } = ctx.request // post请求
+    console.log(body)
     try {
       const result = await send({
         // body.username -> database -> email

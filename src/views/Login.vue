@@ -10,7 +10,7 @@
           <div class="tab-item">
             <div class="form-pane">
               <form method="post">
-                <validation-provider name="用户名"  rules="required|email" v-slot="{errors}">
+                <validation-provider name="email"  rules="required|email" v-slot="{errors}">
                   <div class="form-item">
                     <label for="L_username" class="form-label">用户名</label>
                     <div class="input-inline">
@@ -26,7 +26,7 @@
                     </div>
                   </div>
                 </validation-provider>
-                <validation-provider name="密码"  rules="required|min:6" v-slot="{errors}">
+                <validation-provider name="password"  rules="required|min:6" v-slot="{errors}">
                   <div class="form-item">
                     <label for="L_pass" class="form-label">密码</label>
                     <div class="input-inline">
@@ -42,7 +42,7 @@
                     <div class="error">{{errors[0]}}</div>
                   </div>
                 </validation-provider>
-                <validation-provider name="验证码"  rules="required|length:4" v-slot="{errors}">
+                <validation-provider name="code"  rules="required|length:4" v-slot="{errors}">
                   <div class="form-item">
                     <label for="L_code" class="form-label">验证码</label>
                     <div class="input-inline">
@@ -92,17 +92,17 @@
 </template>
 
 <script>
-import { ValidationProvider, extend } from 'vee-validate'
-import * as rules from 'vee-validate/dist/rules'
-import zh from 'vee-validate/dist/locale/zh_CN'
+import { ValidationProvider } from 'vee-validate'
+// import * as rules from 'vee-validate/dist/rules'
+// import zh from 'vee-validate/dist/locale/zh_CN'
 import { getCode } from '../api/login'
 
-for (const rule in rules) {
-  extend(rule, {
-    ...rules[rule],
-    message: zh.messages[rule]
-  })
-}
+// for (const rule in rules) {
+//   extend(rule, {
+//     ...rules[rule],
+//     message: zh.messages[rule]
+//   })
+// }
 
 export default {
   name: 'login',

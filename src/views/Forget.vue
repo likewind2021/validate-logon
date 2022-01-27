@@ -44,7 +44,7 @@
                   </div>
                 </validation-provider>
                 <div class="form-item">
-                  <button class="btn">提交</button>
+                  <button class="btn" @click="submit">提交</button>
                 </div>
               </form>
             </div>
@@ -59,7 +59,7 @@
 import { ValidationProvider, extend } from 'vee-validate'
 import * as rules from 'vee-validate/dist/rules'
 import zh from 'vee-validate/dist/locale/zh_CN'
-import { getCode } from '../api/login'
+import { getCode, forget } from '../api/login'
 
 for (const rule in rules) {
   extend(rule, {
@@ -88,6 +88,17 @@ export default {
       getCode().then((res) => {
         if (res.code === 200) {
           this.svg = res.data
+        }
+      })
+    },
+    submit () {
+      forget({
+        username: this.username,
+        code: this.code
+      }).then((res) => {
+        console.log(res)
+        if (res.code === 200) {
+          alert('邮件发送成功')
         }
       })
     }

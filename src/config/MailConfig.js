@@ -93,7 +93,7 @@ async function send (sendInfo) {
   })
 
   // eslint-disable-next-line no-sequences
-  return 'Message sent: %s', info.messageId
+  return info.messageId
   // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
 
   // Preview only available when sending through an Ethereal account
