@@ -119,7 +119,6 @@ import zh from 'vee-validate/dist/locale/zh_CN'
 import { getCode } from '../api/login'
 
 for (const rule in rules) {
-  console.log(rules)
   extend(rule, {
     ...rules[rule],
     message: zh.messages[rule]
