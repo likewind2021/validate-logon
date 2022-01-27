@@ -12,9 +12,10 @@ const i18n = new VueI18n({
       fields: {
         email: '邮箱',
         password: '密码',
-        name: '昵称',
+        nickname: '昵称',
         username: '账号',
-        code: '验证码'
+        code: '验证码',
+        repass: '确认密码'
       },
       // validation: zh.messages
       // 自定义 method1
