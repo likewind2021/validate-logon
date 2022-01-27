@@ -12,7 +12,8 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import 'font-awesome/css/font-awesome.css'
 
 // veevalidate
-import './util/veevalidate'
+// import './util/veevalidate'
+import './util/veevalidate-i18n'
 
 import './style/reset.css'
 Vue.config.productionTip = false
