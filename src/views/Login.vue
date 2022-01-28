@@ -96,6 +96,8 @@ import { ValidationProvider } from 'vee-validate'
 // import * as rules from 'vee-validate/dist/rules'
 // import zh from 'vee-validate/dist/locale/zh_CN'
 import { getCode } from '../api/login'
+import { v4 as uuidv4 } from 'uuid/'
+// import axios from 'axios'
 
 // for (const rule in rules) {
 //   extend(rule, {
@@ -118,11 +120,31 @@ export default {
     }
   },
   mounted () {
+    // this.getCaptcha()
+    let sid = ''
+    if (localStorage.getItem('sid')) {
+      sid = localStorage.getItem('sid')
+    } else {
+      sid = uuidv4()
+      localStorage.setItem('sid', sid)
+    }
+    this.$store.commit('setSid', sid)
     this._getCode()
   },
   methods: {
+    // getCaptcha () {
+    //   axios.get('http://localhost:3000/getCaptcha').then((res) => {
+    //     if (res.status === 200) {
+    //       const obj = res.data
+    //       if (obj.code === 200) {
+    //         this.svg = obj.data
+    //       }
+    //     }
+    //   })
+    // },
     _getCode () {
-      getCode().then((res) => {
+      const sid = this.$store.state.sid
+      getCode(sid).then((res) => {
         if (res.code === 200) {
           this.svg = res.data
         }
@@ -188,4 +210,10 @@ li {
 input {
   display: inline-block;
 }
+/* .svg {
+  position: relative;
+  top: 6px;
+  width: 150px;
+  height: 28px;
+} */
 </style>
