@@ -22,7 +22,9 @@ const i18n = new VueI18n({
       validation: {
         ...zh.messages,
         required: '请输入{_field_}',
-        email: '请输入正确的{_field_}'
+        email: '请输入正确的{_field_}',
+        nickname: '不能以纯数字为昵称',
+        repass: '确认密码和密码不一致'
       }
     }
   }
