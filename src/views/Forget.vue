@@ -9,7 +9,7 @@
         <div class="form tab-content" >
           <div class="tab-item">
             <div class="form-pane">
-              <form method="post">
+              <form>
                 <validation-provider name="email"  rules="required|email" v-slot="{errors}">
                   <div class="form-item">
                     <label for="L_username" class="form-label">用户名</label>
@@ -44,7 +44,7 @@
                   </div>
                 </validation-provider>
                 <div class="form-item">
-                  <button class="btn" @click="submit">提交</button>
+                  <button class="btn" @click.prevent="submit">提交</button>
                 </div>
               </form>
             </div>
@@ -96,7 +96,7 @@ export default {
         username: this.username,
         code: this.code
       }).then((res) => {
-        console.log(res)
+        // console.log(res)
         if (res.code === 200) {
           alert('邮件发送成功')
         }
@@ -160,5 +160,20 @@ li {
   display: inline-block;
   padding: 0 20px;
   color: #c00
+}
+</style>
+<style lang="scss">
+.tab-content {
+  .svg {
+    position: relative;
+    display: inline-block;
+    > svg {
+      position: absolute;
+      top: -20px;
+      height: 28px;
+      border: 1px solid #ddd;
+      border-radius: 2px;
+    }
+  }
 }
 </style>

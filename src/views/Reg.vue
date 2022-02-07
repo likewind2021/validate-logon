@@ -9,7 +9,7 @@
         <div class="form tab-content" >
           <div class="tab-item">
             <div class="form-pane">
-              <form method="post">
+              <form>
                 <validation-provider name="email"  rules="required|email" v-slot="{errors}">
                   <div class="form-item">
                     <label for="L_username" class="form-label">用户名</label>
@@ -27,7 +27,7 @@
                     </div>
                   </div>
                 </validation-provider>
-                <validation-provider name="nickname"  rules="required|min:4" v-slot="{errors}">
+                <validation-provider name="nickname"  rules="required|min:4|nickname" v-slot="{errors}">
                   <div class="form-item">
                     <label for="L_nickname" class="form-label">昵称</label>
                     <div class="input-inline">
@@ -211,5 +211,20 @@ li {
 }
 .fa-qq {
   padding: 0 20px;
+}
+</style>
+<style lang="scss">
+.tab-content {
+  .svg {
+    position: relative;
+    display: inline-block;
+    > svg {
+      position: absolute;
+      top: -20px;
+      height: 28px;
+      border: 1px solid #ddd;
+      border-radius: 2px;
+    }
+  }
 }
 </style>
