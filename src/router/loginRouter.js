@@ -3,8 +3,10 @@ const loginController = require('../api/LoginController')
 
 const router = new Router()
 
+router.prefix('/login')
 router.post('/forget', loginController.forget) // 管理业务对应的路径
-router.get('/test', loginController.test) // 管理业务对应的路径
+// router.get('/test', loginController.test)
+router.post('/login', loginController.login)
 
 module.exports = router
 // export default router
