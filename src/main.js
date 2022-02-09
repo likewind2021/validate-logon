@@ -15,6 +15,10 @@ import 'font-awesome/css/font-awesome.css'
 import './utils/veevalidate-i18n'
 
 import './style/reset.css'
+
+import Alert from './components/modules/alert/Alert.vue'
+
+Vue.use(Alert)
 Vue.config.productionTip = false
 
 new Vue({
