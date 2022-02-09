@@ -179,14 +179,14 @@ li {
   background: #fff;
 }
 .this {
-  color: #009966;
+  color: #009688;
 }
 .tab-content {
   padding: 15px 0;
   border-top: 1px solid #d3d3d3;
 }
 .btn {
-  background: #009966;
+  background: #009688;
   color: #fff;
 }
 .form-item {

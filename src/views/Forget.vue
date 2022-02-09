@@ -134,10 +134,10 @@ li {
   padding: 15px 0;
 }
 .this {
-  color: #009966;
+  color: #009688;
 }
 .btn {
-  background: #009966;
+  background: #009688;
   color: #fff;
 }
 .form-item {
