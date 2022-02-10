@@ -16,7 +16,7 @@ import './utils/veevalidate-i18n'
 
 import './style/reset.css'
 
-import Alert from './components/modules/alert/Alert.vue'
+import Alert from './components/modules/alert'
 
 Vue.use(Alert)
 Vue.config.productionTip = false
