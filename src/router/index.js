@@ -18,7 +18,14 @@ const routes = [
   {
     path: '/reg',
     name: 'reg',
-    component: () => import(/* webpackChunkName: 'reg */ '../views/Reg.vue')
+    component: () => import(/* webpackChunkName: 'reg */ '../views/Reg.vue'),
+    beforeEnter: (to, from, next) => {
+      if (from.name === 'login') {
+        next()
+      } else {
+        next('/login')
+      }
+    }
   },
   {
     path: '/forget',
