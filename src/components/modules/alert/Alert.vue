@@ -17,6 +17,10 @@
 <script>
 export default {
   props: {
+    type: {
+      type: String,
+      default: 'alert'
+    },
     msg: {
       type: String,
       default: '这是自定义消息'
