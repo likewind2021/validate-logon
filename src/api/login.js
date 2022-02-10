@@ -45,7 +45,6 @@ const reg = (regInfo) => {
     ...regInfo
   })
 }
-
 export {
   getCode, forget, login, reg
 }
