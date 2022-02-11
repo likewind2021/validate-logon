@@ -1,11 +1,11 @@
-import redis from 'redis'
-import { promisifyAll } from 'bluebird'
-import config from './index'
+const redis = require('redis')
+const { promisifyAll } = require('bluebird')
+const config = require('./index')
 
 const options = {
   host: config.REDIS.host,
   port: config.REDIS.port,
-  password: config.REDIS.password,
+  // password: config.REDIS.password,
   detect_buffers: true,
   // 重试策略
   retry_strategy: function (options) {
@@ -31,6 +31,9 @@ const options = {
 // 创建连接
 const client = promisifyAll(redis.createClient(options))
 
+client.on('data', () => {
+  console.log('Redis successfly')
+})
 // 连接错误
 client.on('error', (err) => {
   console.log('Redis CLient Error' + err)
@@ -74,8 +77,7 @@ const delValue = (key) => {
     }
   })
 }
-
-export {
+module.exports = {
   client,
   setValue,
   getValue,
