@@ -1,5 +1,6 @@
 <template>
   <div class="container fly-marginTop">
+    <!-- <Alert :msg="'这是alert弹窗'" :isShow="true"></Alert> -->
     <div class="fly-panel fly-panel-user">
       <div class="tab">
         <ul class="tab-title">
@@ -45,7 +46,7 @@
                       <div class="error">{{ errors[0] }}</div>
                     </div>
                   </validation-provider>
-                  <validation-provider name="code" rules="required|length:4" v-slot="{errors}">
+                  <validation-provider ref="codefield" name="code" rules="required|length:4" v-slot="{errors}">
                     <div class="form-item">
                       <label for="L_code" class="form-label">验证码</label>
                       <div class="input-inline">
@@ -101,23 +102,26 @@ import { ValidationProvider, ValidationObserver } from 'vee-validate'
 // import zh from 'vee-validate/dist/locale/zh_CN'
 import { getCode, login } from '../api/login'
 import { v4 as uuidv4 } from 'uuid/'
+// import Alert from '../components/modules/alert/Alert'
 
 export default {
   name: 'login',
   components: {
     ValidationProvider,
     ValidationObserver
+    // Alert
   },
   data () {
     return {
-      username: '',
-      password: '',
-      code: '',
+      username: '123456@qq.com',
+      password: '1234567',
+      code: '1234',
       svg: '图片'
     }
   },
   mounted () {
     // this.getCaptcha()
+    window.vue = this
     let sid = ''
     if (localStorage.getItem('sid')) {
       sid = localStorage.getItem('sid')
@@ -152,7 +156,6 @@ export default {
       if (!isValid) {
         return false
       }
-      console.log(111)
       login({
         username: this.username,
         password: this.password,
@@ -160,7 +163,22 @@ export default {
         sid: this.$store.state.sid
       }).then((res) => {
         if (res.code === 200) {
-          console.log(res)
+          this.username = ''
+          this.password = ''
+          this.code = ''
+          requestAnimationFrame(() => {
+            this.$refs.observer.reset()
+          })
+        } else if (res.code === 401) {
+          this.$refs.codefield.setErrors([res.msg])
+        }
+      }).catch((err) => {
+        console.log('error:', err.response)
+        const data = err.response.data
+        if (data.code === 500) {
+          this.$alert('用户名或密码校验失败，请检查！')
+        } else {
+          this.$alert('服务器错误')
         }
       })
     }
@@ -195,7 +213,7 @@ li {
 }
 
 .this {
-  color: #009966;
+  color: #009688;
 }
 
 .tab-content {
@@ -225,7 +243,7 @@ li {
 }
 
 .btn {
-  background: #009966;
+  background: #009688;
   color: #fff;
 }
 
