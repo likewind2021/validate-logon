@@ -4,7 +4,7 @@ const jsonwebtoken = require('jsonwebtoken')
 const config = require('../config/index')
 const checkCode = require('../common/Utils')
 const User = require('../model/User')
-
+const bcrypt = require('bcrypt')
 class LoginController {
   // eslint-disable-next-line no-useless-constructor
   constructor () {}
@@ -42,14 +42,14 @@ class LoginController {
     const { body } = ctx.request
     const sid = body.sid
     const code = body.code
-    let result = ''
-    try {
-      result = await checkCode(sid, code)
-    } catch (error) {
-      console.log(error)
-    }
+    // let result = ''
+    // try {
+    //   result = await checkCode(sid, code)
+    // } catch (error) {
+    //   console.log(error)
+    // }
     // 验证图片验证码的时效性、正确性
-    if (result) {
+    if (await checkCode(sid, code)) {
       // 验证用户账号密码是否正确
       let checkUserPassword = false
       // const user = await User.findOne({ username: body.username })
@@ -61,7 +61,7 @@ class LoginController {
         }
         return
       }
-      if (user.password === body.password) {
+      if (await bcrypt.compare(body.password, user.password)) {
         checkUserPassword = true
       }
       // mongoDB 查库
@@ -87,6 +87,71 @@ class LoginController {
         code: 401,
         msg: '图形验证码错误，请检查'
       }
+    }
+  }
+
+  async reg (ctx) {
+    // 接收客户端数据
+    // const { body } = ctx.request
+    // // 校验验证码内容（正确性 时效性）
+    // const sid = body.sid
+    // const code = body.code
+    const { sid, code, username, password, nickname } = ctx.request.body
+    // let result = ''
+    // try {
+    //   result = await checkCode(sid, code)
+    // } catch (error) {
+    //   console.log(error)
+    // }
+    const msg = {}
+    let check = true
+    // 验证图片验证码的时效性、正确性
+    if (await checkCode(sid, code)) {
+      // 查库，检查 username 是否被注册
+      const user1 = await User.findOne({ username })
+      if (user1 && user1.username === username) {
+        // ctx.body = {
+        //   code: 500,
+        //   msg: ['此邮箱已经注册，可以通过邮箱找回密码']
+        // }
+        // return
+        msg.username = ['此邮箱已经注册，可以通过邮箱找回密码']
+        check = false
+      }
+      // 查库，检查 nickname 是否被注册
+      const user2 = await User.findOne({ nickname })
+      if (user2 && user2.nickname === nickname) {
+        msg.nickname = ['此昵称已经被注册，请修改']
+        check = false
+      }
+      // 将数据写入数据库
+      const newPassword = await bcrypt.hash(password, 5)
+      if (check) {
+        const user = new User({
+          username,
+          nickname,
+          password: newPassword,
+          created: moment().format('YYYY-MM-DD HH:mm:ss')
+        })
+        const result = await user.save()
+        ctx.body = {
+          code: 200,
+          data: result,
+          msg: '注册成功'
+        }
+        return
+      }
+    } else {
+      // veevalidate 显示的错误
+      msg.code = ['验证码已经失效，请重新获取']
+      // ctx.body = {
+      //   code: 500,
+      //   msg: ['验证码已经失效，请重新获取']
+      // }
+    }
+    ctx.body = {
+      code: 500,
+      msg: msg
     }
   }
 }
